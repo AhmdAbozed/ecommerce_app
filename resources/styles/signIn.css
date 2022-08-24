@@ -1,0 +1,76 @@
+#signInBody{
+   margin-top: 5em;
+   
+}
+
+#signInContent{
+    border-radius:10px;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 97%;
+    max-width: 50em;
+    height: 70%;
+    background-color: 232222;
+    box-shadow:rgb(18, 18, 18) 0.4em 0.4em 0.4em;
+}
+
+#formBody{
+    color: rgb(203, 202, 202);
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 5em;
+}
+
+#gpuImgSection{
+    border-radius:10px 0px 0px 10px;
+    height: 100%;
+    width: 100%;
+    flex: 0.6;
+    overflow: hidden;
+
+}
+
+#gpuImg{
+    border-radius:10px 0px 0px 10px;
+    filter:brightness(50%);
+    position: relative;
+    width: 27em;
+    left: -5em;
+    top: -2em;
+
+   
+    /*
+    width: 100%;
+    height: 100%;
+    */
+}
+
+#signInTitle{
+    font-size: clamp(2vw, 44px, 8vw);
+}
+
+#formbody input{
+    border-radius: 8px;
+    max-width: 15em;
+    width: 100%;
+    margin-bottom: 3em;
+    background-color: rgb(159, 157, 167);
+    }
+
+#formbody label{
+
+    font-size: clamp(1vw, 22px, 4vw);
+    margin-bottom: 0.7em;
+    
+}
+
+#registerLink{
+    align-self: auto;
+}

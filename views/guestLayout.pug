@@ -1,0 +1,19 @@
+html(lang=en)
+  head
+    link(rel="stylesheet", href="http://localhost:3000/resources/styles/layout.css") 
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title
+  body
+    ul(class = "head")
+      li(class = "headBlocks" id = "searchBlock") 
+        input(type="text" id="searchBar") 
+        div(type="button", id="searchButton")
+          img(src="http://localhost:3000/resources/icons/search.png" id = "searchIcon")
+           
+      li(class = "headBlocks" id = "products") Products
+      li(class = "headBlocks" id = "signIn") Sign In
+      li(class = "headBlocks" id = "register") Register
+    div(class = "body")
+      block content
+     
+    div(class = "footer")

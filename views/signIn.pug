@@ -1,0 +1,19 @@
+extends guestLayout
+
+block content
+    link(rel="stylesheet", href="http://localhost:3000/resources/styles/signIn.css")
+    div(id="signInBody")
+        div(class="signInContent" id="signInContent")
+            div(id = "gpuImgSection")
+                img(src="http://localhost:3000/resources/icons/gpu3.png" id = "gpuImg")
+                span(id = "gpuText") ABOZED HARDWARE
+        
+            form(action="", method="post"  id = "formBody")
+                p(id = "signInTitle") Sign In
+                label(for="usernameText") Username 
+                input(type="text" id = "usernameText" name = "username")
+                label(for="passwordText") Password
+                input(type="Text" id = "passwordText" name = "password")
+                input(type="submit", id="submit")
+                a(href = "http://localhost:3000/user/signup" id="registerLink") Sign Up?
+    
