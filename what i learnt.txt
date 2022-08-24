@@ -1,7 +1,0 @@
-if you want resizable div,
-simply add width 100%, and set a max width.
-
-
-you can center div using margin auto
-or better yet, place-items: center, heavenly property
-
