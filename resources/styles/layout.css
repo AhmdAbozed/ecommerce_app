@@ -10,6 +10,12 @@ body{
     
 }
 
+a, u {
+    text-decoration: none;
+    color: inherit;
+}
+
+
 .head{
     display: flex;
     flex-direction: row;

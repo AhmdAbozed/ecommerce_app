@@ -6,16 +6,24 @@ block content
         div(class="signInContent" id="signInContent" style = "height: 80%")
             div(id = "gpuImgSection")
                 img(src="http://localhost:3000/resources/icons/gpu3.png" id = "gpuImg")
-                span(id = "gpuText") ABOZED HARDWARE
+                
         
             form(action="", method="post"  id = "formBody")
+                
                 p(id = "signInTitle") Sign Up
+                
                 label(for="usernameText") Username 
                 input(type="text" id = "usernameText" name = "username")
+                p(class = "error" id="usernameError") 
+                
                 label(for="passwordText") Password
                 input(type="Text" id = "passwordText" name = "password")
+                p(class = "error" id="passwordError") 
+                
                 label(for="email") Email
                 input(type="Text" id = "email" name = "email")
+                p(class = "error" id="emailError") 
+
                 input(type="submit", id="submit")
                 a(href = "http://localhost:3000/user/signin" id="registerLink") Already have an account?
-    
+    script(src="http://localhost:3000/resources/js/signup.js") 
