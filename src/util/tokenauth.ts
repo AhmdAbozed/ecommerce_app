@@ -9,7 +9,7 @@ const {tokenSecret} = process.env;
 
 const verifyAuthToken = (req: Request, res: Response, next: () => void) => {
     try {
-      req.cookies.token
+      req.cookies.token //
         if (req.cookies.token) {
           const token: string = req.cookies.token;
           const decoded = jwt.verify(token, tokenSecret as string)

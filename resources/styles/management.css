@@ -1,0 +1,138 @@
+p
+{
+    display: inline-block;
+
+}
+#body{
+    margin-top: 1em;
+    margin-bottom: 3em;
+ }
+ 
+#bodyContent{
+     border-radius:10px;
+     margin: auto;
+     height: auto;
+     display: flex;
+     flex-wrap: wrap;
+     align-content: center;
+     width: 97%;
+     max-width: 80em;
+    
+     background-color: D9D9D9;
+     box-shadow:rgb(79, 79, 79) 0.1em 0.1em 1em;
+}
+
+#productDetails{
+    
+    flex: 1.5;
+    display: flex;
+
+    flex-direction: column;
+    margin-bottom: 3em;
+    padding-right: 10em;
+    padding-left: 3em;
+} 
+
+@media (max-width: 530px) {
+    #productDetails{
+    
+        margin-bottom: 3em;
+        padding-right: 0em;
+        padding-left: 0em;
+    } 
+}
+
+#productDetails #details{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#pic_submission{
+    flex: 3;
+    padding-bottom: 1.9em;
+}
+
+#pic{
+    display: block;
+    min-width: 24em;
+    min-height: 30em;
+    margin: auto;
+    margin-top: 3em;
+    width: 100%;
+    max-width: 20em;
+    height: 100%;
+    max-height: 25em;
+    background-color: 4D4C4C;
+}
+
+@media (max-width: 530px) {
+    #pic{
+    
+        min-width: 14em;
+    } 
+}
+
+.label{
+    font-family: sans-serif;
+    font-size: 18;
+}
+
+.input{
+    
+    color: black;
+    background-color: D9D9D9;
+    border: none;
+    margin-bottom: 0.5em;
+    height: 2em;
+    font-size: 19;
+
+
+
+}
+
+.btn{
+margin-top: 0.5em;
+}
+
+#inputTitle{
+    font-size: 30;
+
+    min-width: 10em;
+    width: 100%;
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+
+#details{
+    width: 100%;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid rgb(0, 0, 0);  
+}
+
+.inputParagraph{
+    white-space: pre-line;
+    background-color: D9D9D9;
+    border: none;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    font-size: 13;
+    margin-top: 1em;
+    height: 10em;
+    padding-bottom: 5em;
+    width: 100%;
+}
+#imgbtn{
+    padding-top: 0.3em;
+    text-align: center;
+    height: 2em;
+}
+#imgLabel{
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+#imgInput{
+    opacity: 0;
+    width: 100%;
+    height: 0%;
+}

@@ -8,6 +8,7 @@
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "db-migrate": "^0.11.13",
     "db-migrate-pg": "^1.2.2",
@@ -27,11 +28,17 @@
   "scripts": {
     "build": "tsc",
     "nodemon": "nodemon -e js,ts --watch src --exec \"npm run build && node ./dist/server.js\"",
+    "testDB": "db-migrate --env placeholder db:create hardware_test_db",
     "migrateUp": "cross-env ENV=dev db-migrate --env dev up",
-    "migrateDown": "cross-env ENV=dev db-migrate --env dev down"
+    "migrateDown": "cross-env ENV=dev db-migrate --env dev down",
+    "test": "tsc && cross-env ENV=test jasmine",
+    "migrateUpTest": "cross-env ENV=test db-migrate --env test up",
+    "migrateDownTest": "cross-env ENV=test db-migrate --env test down",
+    "migrateTest": "npm run build && npm run migrateUpTest && (npm run test || npm run migrateDownTest) && npm run migrateDownTest"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/jasmine": "^4.3.0",
     "@types/pg": "^8.6.5",
     "@types/supertest": "^2.0.12"

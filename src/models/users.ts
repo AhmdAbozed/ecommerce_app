@@ -1,15 +1,15 @@
 import client from '../database.js'
 import bcrypt from 'bcrypt'
-import dotenv from 'dotenv'
 import { IsEmailOptions } from 'express-validator/src/options.js';
 import { QueryResult } from 'pg';
+import dotenv from 'dotenv'
 
 dotenv.config()
 
 const { pepper, saltRounds, bcryptPass, tokenSecret } = process.env;
 
 export type user = {
-
+    id?: number,
     username: string,
     password: string,
     email: string,
@@ -50,7 +50,6 @@ export class usersStore {
                     if (foundUser.email == user.email){ errors.push({param: "email", msg:"Email already in-use"});};
                 }
             }
-            console.log("Errormsgs from signup: "+errors);
             return errors;
         }
         catch(err){throw new Error(`${err}`)}
@@ -59,14 +58,14 @@ export class usersStore {
     async signup(user: user): Promise<user> {
         try {
 
-            user.password = bcrypt.hashSync(
+            const passhash = bcrypt.hashSync(
                 `${user.password}` + pepper,
                 Number(saltRounds)
             );
 
             const conn = await client.connect();
             const sql = 'INSERT INTO users ("username", "password", "email") VALUES ($1, $2, $3) RETURNING *';
-            const results = await conn.query(sql, [user.username, user.password, user.email]);
+            const results = await conn.query(sql, [user.username, passhash, user.email]);
             conn.release();
 
             return results.rows[0];
@@ -85,13 +84,13 @@ export class usersStore {
             const sql = 'SELECT * FROM users WHERE username=($1)';
             const results = await conn.query(sql, [user.username]);
             conn.release();
-            
+
             if(results.rows[1]){
                 "DB error: 2 results to sign in query"
             }
             
             if(results.rows[0]){
-                if(!(bcrypt.compareSync(user.password, results.rows[0].password))){
+                if(bcrypt.compareSync(user.password+pepper, results.rows[0].password)){
                     
                     return results.rows;
                 }

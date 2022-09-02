@@ -43,10 +43,10 @@ const signUpPost = [
         
         const validation = await store.validateSignUp(submission)
         console.log("recieved validation whatever: "+validation)
-       if (validation[0]){
+        if (validation[0]){
             res.send(validation);
             return;
-       }
+        }
         const result = await store.signup(submission)
 
         const token = jwt.sign({ user: result }, tokenSecret as string)
@@ -74,6 +74,7 @@ const signInPost = async function (req: Request, res: Response) {
     console.log("submission"+ submission.username + submission.password)
     
     const result = await store.signin(submission)
+
     if(result[0]){
         const token = jwt.sign({ user: result[0] }, tokenSecret as string)
         
@@ -86,7 +87,6 @@ const signInPost = async function (req: Request, res: Response) {
     }
     res.send(result)
 
-    console.log(JSON.stringify(result) + "<-- sign in data")
 }
 
 const signOut = function(req: Request, res: Response){
