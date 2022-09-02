@@ -5,8 +5,11 @@
 
 body{
     margin: 0;
-    background-color:rgb(130, 130, 130);
+    padding: 0;
+    /*background-color:rgb(130, 130, 130);*/
+    background-color: ABABAB;
     -webkit-text-size-adjust: 100%;
+    min-height: 100%;
     
 }
 
@@ -47,7 +50,7 @@ a, u {
     height: 5%;
     width: 100%;
     background-color: 232222;
-    position:absolute;
+    position: absolute;
     bottom:0;
 }
 

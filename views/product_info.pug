@@ -1,0 +1,22 @@
+extends homeLayout
+
+block content
+    link(rel="stylesheet", href="http://localhost:3000/resources/styles/management.css")
+    div(id = "body")
+        div(id = "bodyContent")
+            div(id = "pic_submission")
+                div(id = "pic")
+                
+            div(id = "productDetails")
+                p( class = "input" id = "inputTitle") #{name} 
+                div(class = "details" id = "details")
+                    label(for="" class = "label") TYPE: 
+                        p(class = "input" id = "inputType") #{type}
+                    label(for="" class = "label") BRAND:
+                        p(class = "input" id = "inputBrand") #{brand}
+                    label(for="" class = "label") PRICE:
+                        p(class = "input" id = "inputPrice") #{price}
+                p(class = "inputParagraph" id = "inputInfo") #{description}
+                button(type="submit" class = "btn" id = "submission") Order
+                button(type="submit" class = "btn" id = "cart") Add to cart
+                
