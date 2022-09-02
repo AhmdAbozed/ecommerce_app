@@ -9,11 +9,17 @@ block content
                 span(id = "gpuText") ABOZED HARDWARE
         
             form(action="", method="post"  id = "formBody")
+                
                 p(id = "signInTitle") Sign In
+                
                 label(for="usernameText") Username 
                 input(type="text" id = "usernameText" name = "username")
+               
                 label(for="passwordText") Password
                 input(type="Text" id = "passwordText" name = "password")
+                
+                p(class = "error" id="signinError")
+
                 input(type="submit", id="submit")
                 a(href = "http://localhost:3000/user/signup" id="registerLink") Sign Up?
-    
+    script(src="http://localhost:3000/resources/js/signin.js") 

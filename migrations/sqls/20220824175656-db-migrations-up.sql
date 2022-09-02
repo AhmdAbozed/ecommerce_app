@@ -1,2 +1,3 @@
 /* Replace with your SQL commands */
-DROP TABLE users;
+CREATE TABLE users (id SERIAL PRIMARY KEY, "username" VARCHAR, "email" VARCHAR, password VARCHAR);
+CREATE TABLE products (id SERIAL PRIMARY KEY, name VARCHAR, description VARCHAR, price VARCHAR);
