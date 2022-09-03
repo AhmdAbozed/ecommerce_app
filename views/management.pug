@@ -7,7 +7,7 @@ block content
             div(id = "pic_submission")
                 img(id = "pic")
                 button(type="submit", id = "submission") 
-            form(action="" method="post" id = "productDetails")
+            form(action="" method="post" id = "productDetails" enctype="multipart/form-data")
                 input(type="text" name = "name" placeholder = "PRODUCT NAME" class = "input" id = "inputTitle")
                 div(class = "details" id = "details")
                     label(for="" class = "label") TYPE: 

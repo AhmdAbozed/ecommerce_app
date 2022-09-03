@@ -1,6 +1,7 @@
 
 import client from '../database.js'
 
+
 export type product = {
     id?: Number;
     type:string;
@@ -28,7 +29,7 @@ export class productsStore {
 
     async create(product: product): Promise<product> {
         try {
-
+            console.log("Recieved req.body: "+JSON.stringify(product))
             const conn = await client.connect();
             const sql = 'INSERT INTO products (name, type, brand, description, price) VALUES ($1, $2, $3, $4, $5) RETURNING *';
             const results = await conn.query(sql, [product.name, product.type, product.brand, product.description, product.price]);

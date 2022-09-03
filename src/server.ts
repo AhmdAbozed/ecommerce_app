@@ -4,7 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import catalog from "./catalog.js";
 import cookies from 'cookie-parser';
-import https from 'https'
+
 
 
 const app = express();
@@ -15,7 +15,7 @@ app.listen(port,()=>{
     console.log("Server running on: 3000"+`${__dirname}`)
 })
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(cookies())
 
@@ -31,4 +31,5 @@ app.get("/product",(req: Request, res: Response)=>{res.render("product_info.pug"
 catalog(app)
 
 export {app}
+
 

@@ -5,23 +5,47 @@ import { productsStore, product } from '../models/products.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
 import {verifyAuthToken, redirectToHome} from "../util/tokenauth.js"
+import blazeApi from "../util/backblaze.js"
+import fs from "fs"
+import formidable from "formidable"
+
 dotenv.config()
 
-const { tokenSecret } = process.env
+const { tokenSecret, blazeKeyId, blazeKey } = process.env
 
 const store = new productsStore();
 
 const addProduct = async function (req: Request, res: Response) {
-    console.log(req.body);
-    res.send("recieved");
-    const submission:product = {
-        name: req.body.name,
-        type: req.body.type,
-        brand: req.body.brand,
-        price: req.body.price,
-        description: req.body.description
+    console.log("the body "+JSON.stringify(req.body));
+
+    const form = new formidable.IncomingForm();
+
+    
+    
+    form.parse(req, async (err, fields, files) => {
+        console.log("INSIDE FORM PARSE")
+        console.log("FIELDS "+JSON.stringify(fields));
+        
+        console.log("FILES "+JSON.stringify(files));
+        if (err) {
+          console.log("Error parsing the files: "+err);
+          
+        }
+      });
+      console.log("end")
+    //fs.writeFileSync("C:/Users/DELL/Desktop/hello.png",URL.createObjectURL(req.body.file))
+    res.end("recieved");
+    console.log("sent")
+    
+    const submission:product = {name: req.body.name, type: req.body.type, brand: req.body.brand, price: req.body.price, description: req.body.description}
+
+    const result = await store.create(submission);
+
+    if(result){
+        const blazeUrls = await blazeApi(blazeKeyId!, blazeKey!);
+
     }
-    await store.create(submission);
+
 }
 
 const getProduct = async function (req: Request, res: Response) {
