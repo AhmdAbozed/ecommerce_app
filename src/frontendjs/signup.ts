@@ -2,7 +2,9 @@
 document.forms["formBody"].addEventListener("submit", async (event) => {
   
   event.preventDefault(); //default behaviour replaces the page with the response file, which is not ideal.
-  
+  //@ts-ignore
+  const forum = new URLSearchParams(new FormData(event.target))
+  console.log(forum)
   const resp = await fetch(event.target.action, {
     method: "POST",
     //@ts-ignore

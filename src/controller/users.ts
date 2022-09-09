@@ -5,9 +5,14 @@ import { usersStore, user } from '../models/users.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
 import {verifyAuthToken, redirectToHome} from "../util/tokenauth.js"
+import bodyParser from "body-parser";
+
+
 dotenv.config()
 
 const { tokenSecret } = process.env
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const store = new usersStore();
 
@@ -102,9 +107,9 @@ const signOut = function(req: Request, res: Response){
 const usersRoutes = (app: express.Application) => {
     app.get("/user", verifyAuthToken, userHome)
     app.get("/user/signin",redirectToHome, signInGet)
-    app.post("/user/signin", signInPost)
+    app.post("/user/signin",urlencodedParser, signInPost)
     app.get("/user/signup",redirectToHome, signUpGet)
-    app.post("/user/signup", signUpPost)
+    app.post("/user/signup",urlencodedParser, signUpPost)
     app.post("/user/signout", signOut)
 
 }

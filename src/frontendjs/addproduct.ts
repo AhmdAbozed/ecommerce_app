@@ -28,7 +28,7 @@ document.forms["productDetails"].addEventListener("submit", async (event) => {
   const options = {
     method: "POST",
     //@ts-ignore
-    body: (submission) //It's unclear what URLSeachParams does, but without it, request body is empty.
+    body: submission
 
   }
   const resp = await fetch("http://" + window.location.hostname + ":" + window.location.port + "/product/add", options);
