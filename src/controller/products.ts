@@ -105,7 +105,7 @@ const addProduct = async function (req: Request, res: Response) {
 
 const getProduct = async function (req: Request, res: Response) {
     const product = await store.read(req.params.id);
-    console.log("description: " + product.description)
+ 
     if (product.id) {
         res.render("product_info.pug", { name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price })
     }

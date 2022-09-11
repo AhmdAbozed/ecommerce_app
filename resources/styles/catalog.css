@@ -1,0 +1,105 @@
+input{
+    border: none;
+}
+
+#body{
+    margin-bottom: 1em;
+    font-family: sans-serif;
+    
+}
+
+#bodyContent{
+ 
+    width: 95%;
+    overflow: hidden;
+    box-shadow:rgb(79, 79, 79) 0.1em 0.1em 1em;
+    margin: auto;
+    margin-top: 3em;
+    margin-bottom: 1.5em;
+
+    border-radius: 25px;
+
+    background-color: aliceblue;
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+
+.filters{
+    background-color: rgb(68, 68, 68);
+    border-radius:10px;
+    color: E7DADA;
+    text-align: center;
+    height: 3rem;
+    margin: 0em;
+    width: 48%;
+    margin:  0 auto 1em auto;
+    color: rgb(203, 202, 202);
+    font-size: 26;
+}
+
+#filterSection{
+    
+    padding-top: 0.5em;
+    background-color: rgb(114, 114, 114);
+    height: 9em;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#catalogSection{
+    background-color: rgb(114, 114, 114);
+}
+
+#catalog{
+    background-color: rgb(114, 114, 114);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: auto;
+}
+
+/*
+By far the easiest way to have dynamic grids I have found.
+Simply add another column when theres enough space for another minimum width element.
+Credits to artstation page for the method
+*/
+
+@media (min-width: 821px){
+    #catalog{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.products{
+    max-width: 16em;
+    box-shadow:0.05rem 0.05rem 0.4rem 0.1rem rgb(40, 40, 40) ;
+    height: 27vw;
+    margin: 0.5em;
+    /*
+    border-style: solid;
+    border-color:  rgb(114, 114, 114);
+    */
+    background-color: rgb(59, 54, 93);
+
+    transition: margin 0.3s, box-shadow 0.3s;
+}
+
+.products:hover{
+    margin:0.3em;
+    box-shadow:0rem 0rem 0.4rem 0.1rem rgb(40, 40, 40) ;
+}
+
+@media (min-width: 821px){
+    .products{
+        height: 20vw;
+    }
+}
+
+@media (min-width: 1100px){
+    .products{
+        max-width: 30em;
+        height: 20vw;
+    }
+}
