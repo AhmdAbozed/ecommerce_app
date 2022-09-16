@@ -27,7 +27,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/server.js",
+    "start": "npm run build && node ./dist/server.js",
     "nodemon": "nodemon -e js,ts --watch src --exec \"npm run build && node ./dist/server.js\"",
     "testDB": "db-migrate --env placeholder db:create hardware_test_db",
     "migrateUp": "cross-env ENV=dev db-migrate --env dev up",
