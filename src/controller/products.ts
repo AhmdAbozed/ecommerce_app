@@ -11,10 +11,11 @@ import fs from "fs"
 import formidable from "formidable"
 import crypto from "crypto"
 import https, { get } from "https"
+import { hostname } from 'os';
 
 dotenv.config()
 
-const { adminTokenSecret, tokenSecret, blazeKeyId, blazeKey } = process.env
+const { adminTokenSecret, tokenSecret, blazeKeyId, blazeKey, HOST_NAME, HOST_PORT_URL } = process.env
 
 const store = new productsStore();
 
@@ -117,7 +118,7 @@ const getProduct = async function (req: Request, res: Response) {
     const product = await store.read(req.params.id);
  
     if (product.id) {
-        res.render("product_info.pug", {name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price })
+        res.render("product_info.pug", {hostname: HOST_NAME, hostport: HOST_PORT_URL,name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price })
     }
     else{
         res.send("Error: 404. Not found")

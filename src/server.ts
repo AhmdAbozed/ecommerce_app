@@ -4,13 +4,12 @@ import path from "path";
 import bodyParser from "body-parser";
 import catalog from "./routes.js";
 import cookies from 'cookie-parser';
-
-
+import dotenv from "dotenv"
 
 const app = express();
-const port = 10000;
+const port = process.env.HOST_PORT
 const __dirname = path.resolve();
-
+console.log(port)
 app.listen(port,()=>{
     console.log("Server running on: "+port+`${__dirname}`)
 })

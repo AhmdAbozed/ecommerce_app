@@ -1,7 +1,10 @@
-extends #{layout}
+extends /Layout
+
 
 block content
-    link(rel="stylesheet", href="http://localhost:3000/resources/styles/management.css")
+    hostname= HOST_NAME
+    hostport= HOST_PORT
+    link(rel="stylesheet", href= hostname+hostport + "/resources/styles/management.css")
     div(id = "body")
         div(id = "bodyContent")
             div(id = "pic_submission")
@@ -19,4 +22,4 @@ block content
                 p(class = "inputParagraph" id = "inputInfo") #{description}
                 button(type="submit" class = "btn" id = "submission") Order
                 button(type="submit" class = "btn" id = "cart") Add to cart
-    script(src="http://localhost:3000/resources/js/getproduct.js")             
+    script(src= hostname+hostport + "/resources/js/getproduct.js")             
