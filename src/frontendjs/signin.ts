@@ -7,14 +7,14 @@ document.forms["formBody"].addEventListener("submit", async (event) => {
     method: "POST",
     //@ts-ignore
     body: new URLSearchParams(new FormData(event.target)) //It's unclear what URLSeachParams does, but without it, request body is empty.
-
+    
   });
-  
+    
   const result = await resp.json();
   console.log(result)
   console.log("result is above, result[0] -->: " + result[0])
   if(result[0]){
-    window.location.href = ("http://"+window.location.hostname+":"+window.location.port+"/user")
+    window.location.href = ("http://"+window.location.hostname+":"+window.location.port+"/")
   }
   else{
     document.getElementById("signinError")!.innerHTML = "Incorrect username or password";

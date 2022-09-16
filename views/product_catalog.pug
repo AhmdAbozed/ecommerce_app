@@ -1,0 +1,27 @@
+
+extends /Layout
+
+block content
+    link(rel="stylesheet", href="http://localhost:3000/resources/styles/catalog.css")
+    div(id = "body")
+        div(id = "bodyContent")
+            div(id = "filterSection")
+
+                select(name="" class = "filters" id="type")
+                    option(value="brandOption") layoute All Products  
+ 
+                select(name="" class = "filters" id="brand")
+                    option(value="brandOption") All brands
+
+
+                select(name="" class = "filters" id="price")
+                    option(value="*") Any price 
+
+                input(type="button" class = "filters" value="FIND" id="find")
+
+            div(id = "catalog")
+                div(class = "products")
+
+    script(src="http://localhost:3000/resources/js/catalog.js")
+    script. 
+        console.log("here" + layout)

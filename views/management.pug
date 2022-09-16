@@ -1,4 +1,4 @@
-extends homeLayout
+extends #{layout}
 
 block content
     link(rel="stylesheet", href="http://localhost:3000/resources/styles/management.css")
@@ -7,18 +7,36 @@ block content
             div(id = "pic_submission")
                 img(id = "pic")
                 button(type="submit", id = "submission") 
-            form(action="" method="post" id = "productDetails")
+            form(action="" method="post" id = "productDetails" enctype="multipart/form-data")
+
                 input(type="text" name = "name" placeholder = "PRODUCT NAME" class = "input" id = "inputTitle")
+                
                 div(class = "details" id = "details")
                     label(for="" class = "label") TYPE: 
-                        input(type="text" name = "type" placeholder = "PRODUCT TYPE" class = "input" id = "inputType")
+                        select(name="type" class = "input" id = "inputType")
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            option(value="gpu") GPU
+                            option(value="cpu") CPU
+                            option(value="screen") Screen 
+                            option(value="laptop") Laptop
+                            option(value="mouse") Mouse
+                            option(value="keyboard") Keyboard 
+                            option(value="headphone") Headphone 
                     label(for="" class = "label") BRAND:
-                        input(type="text" name = "brand" placeholder = "PRODUCT BRAND" class = "input" id = "inputBrand")
+                        select(name="brand" class = "input" id = "inputBrand")
+                            <option hidden disabled selected value> -- select an option -- </option>
+                            option(class = "brandOption gpu" value="nvidia") NVIDIA
+                            option(class = "brandOption gpu cpu" value="amd") AMD
+                            option(class = "brandOption gpu keyboard mouse" value="intel") INTEL
+                            option(class = "brandOption gpu" value="asus") ASUS 
                     label(for="" class = "label") PRICE:
                         input(type="text" name = "price" placeholder = "PRODUCT PRICE" class = "input" id = "inputPrice")
+                
                 textarea(cols="1" rows="1" name = "description" placeholder = "PRODUCT INFO" class = "inputParagraph" id = "inputInfo")
+                
                 button(type="submit" class = "btn" id = "submission") Add product
                 button(type="button" class = "btn" id = "imgbtn")
                     label(for="imgInput" id = "imgLabel" ) upload img  
                     input(type="file" name="img"  class = "btn" id = "imgInput") 
+
     script(src="http://localhost:3000/resources/js/addproduct.js")                

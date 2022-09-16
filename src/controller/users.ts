@@ -4,10 +4,15 @@ import e, { Request, Response } from 'express'
 import { usersStore, user } from '../models/users.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
-import {verifyAuthToken, redirectToHome} from "../util/tokenauth.js"
+import {verifyAuthToken, redirectToHome, createToken} from "../util/tokenauth.js"
+import bodyParser from "body-parser";
+import path from "path"
+
 dotenv.config()
 
-const { tokenSecret } = process.env
+const { tokenSecret, adminTokenSecret, adminUsername, adminPassword} = process.env
+
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const store = new usersStore();
 
@@ -16,6 +21,10 @@ const userHome = function (req: Request, res: Response) {
 }
 
 const signUpGet = function (req: Request, res: Response) {
+    
+    const __dirname = path.resolve()
+    res.locals.basedir =  path.join(__dirname, 'views/guest');
+    
     res.render("signUp.pug")
 }
 
@@ -49,14 +58,7 @@ const signUpPost = [
         }
         const result = await store.signup(submission)
 
-        const token = jwt.sign({ user: result }, tokenSecret as string)
-        
-        console.log("about to send cookies")
-        res.cookie('token', token, {
-            expires: new Date(Date.now() + 10*60*1000), // time until expiration
-            secure: false, // set to true if you're using https
-            httpOnly: true,
-        });
+        createToken(res, result, tokenSecret as string)
         
         res.send(errorArr)
 
@@ -64,11 +66,24 @@ const signUpPost = [
     }]
 
 const signInGet = function (req: Request, res: Response) {
+    
+    const __dirname = path.resolve()
+    res.locals.basedir =  path.join(__dirname, 'views/guest');
+    
     res.render("signIn.pug")
+
 }
 
 const signInPost = async function (req: Request, res: Response) {
     
+    if(req.body.username == adminUsername && req.body.password == adminPassword){
+        createToken(res, "Adminstrator", "admin") 
+        console.log("Back to users from token creation");
+
+        res.send([1])
+        return;
+    }
+
     const submission: user = {username: req.body.username, password: req.body.password, email: ""}
     
     console.log("submission"+ submission.username + submission.password)
@@ -76,36 +91,43 @@ const signInPost = async function (req: Request, res: Response) {
     const result = await store.signin(submission)
 
     if(result[0]){
-        const token = jwt.sign({ user: result[0] }, tokenSecret as string)
-        
-        console.log("about to send cookies")
-        res.cookie('token', token, {
-            expires: new Date(Date.now() + 10*60*1000), // time until expiration
-            secure: false, // set to true if you're using https
-            httpOnly: true,
-        });
+        createToken(res, result[0], tokenSecret as string)
     }
     res.send(result)
 
 }
 
 const signOut = function(req: Request, res: Response){
-    res.cookie('token', "yee yee", {
-        expires: new Date(2000), // time until expiration
-        secure: false, // set to true if you're using https
-        httpOnly: true,
-    });
-    console.log("signing out")
+    if(req.cookies.admin){
+        console.log("first cookie deletion")
+        res.cookie('admin', "yee yee", {
+            
+            expires: new Date(2000), // time until expiration
+            secure: false, // set to true if you're using https
+            httpOnly: true,
+        });
+            
+    }
+    if(req.cookies.user){
+        console.log("second cookie deletion")
+        res.cookie('user', "yee yee", {
+            expires: new Date(2000), // time until expiration
+            secure: false, // set to true if you're using https
+            httpOnly: true,
+        });
+        console.log("signing out")
+    
+    }
     res.render("signIn.pug")
 }
 
 const usersRoutes = (app: express.Application) => {
-    app.get("/user", verifyAuthToken, userHome)
     app.get("/user/signin",redirectToHome, signInGet)
-    app.post("/user/signin", signInPost)
+    app.post("/user/signin",urlencodedParser, signInPost)
     app.get("/user/signup",redirectToHome, signUpGet)
-    app.post("/user/signup", signUpPost)
+    app.post("/user/signup",urlencodedParser, signUpPost)
     app.post("/user/signout", signOut)
+    app.get("/home", verifyAuthToken(tokenSecret as string), userHome)
 
 }
 
