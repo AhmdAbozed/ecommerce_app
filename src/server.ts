@@ -8,11 +8,11 @@ import cookies from 'cookie-parser';
 
 
 const app = express();
-const port = 3000;
+const port = 10000;
 const __dirname = path.resolve();
 
 app.listen(port,()=>{
-    console.log("Server running on: 3000"+`${__dirname}`)
+    console.log("Server running on: "+port+`${__dirname}`)
 })
 
 app.use(express.json());
@@ -22,6 +22,8 @@ app.use(cookies())
 catalog(app)
 
 app.set('view engine', 'pug')
+
+app.get("/status", (req: Request, res: Response)=>{res.status(200).send("<p>Status Code")})
 
 app.use("/resources/", express.static(path.join(__dirname, 'resources')));
 app.use("/resources/js/", express.static(path.join(__dirname, '/dist/frontendjs')));
