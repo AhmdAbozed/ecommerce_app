@@ -2,6 +2,7 @@ import { body, validationResult } from 'express-validator';
 import express from "express"
 import e, { Request, Response } from 'express'
 import { productsStore, product } from '../models/products.js';
+import {addbrand_type} from '../controller/brands_types.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv'
 import { verifyAuthToken, redirectToHome } from "../util/tokenauth.js"
@@ -9,19 +10,16 @@ import blazeApi from "../util/backblaze.js"
 import fs from "fs"
 import formidable from "formidable"
 import crypto from "crypto"
-import https from "https"
+import https, { get } from "https"
 
 dotenv.config()
 
-const { tokenSecret, blazeKeyId, blazeKey } = process.env
+const { adminTokenSecret, tokenSecret, blazeKeyId, blazeKey } = process.env
 
 const store = new productsStore();
 
 const uploadImg = async function (filepath: string, size: number, url_token: any, fileId:string) {
-    var sha1sum = crypto.createHash('sha1').update(filepath).digest("hex");
-    console.log(sha1sum);
     const url = new URL(url_token.uploadUrl)
-    console.log("urlLLLLLLL: " + url)
     const options = {
         hostname: url.hostname,
         path: url.pathname,
@@ -36,7 +34,6 @@ const uploadImg = async function (filepath: string, size: number, url_token: any
         }
     }
 
-    console.log("OPTIONS INSIDE UPLOAD IMG IN CONTROLLER " + JSON.stringify(options))
     return new Promise((resolve, reject) => {
         let uploadresult:any;
         const blazeUploading = https.request(options, (res) => {
@@ -47,7 +44,7 @@ const uploadImg = async function (filepath: string, size: number, url_token: any
                 uploadresult = JSON.parse(chunk);
 
             })
-            res.on('end', () => {console.log("DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"+JSON.stringify(uploadresult)), resolve(uploadresult); });
+            res.on('end', () => {console.log("img upload result: "+JSON.stringify(uploadresult)), resolve(uploadresult); });
 
 
         })
@@ -57,13 +54,15 @@ const uploadImg = async function (filepath: string, size: number, url_token: any
         blazeUploading.write(fs.readFileSync(filepath))
         //blazeUploading.write("hello")
         console.log(filepath)
-        console.log((fs.readFileSync(filepath)))
-        console.log("TFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFf")
         blazeUploading.end()
     })
 }
 
-const addProduct = async function (req: Request, res: Response) {
+const addProductGet = async function (req: Request, res: Response) {
+    res.render("management.pug")
+}
+
+const addProductPost = async function (req: Request, res: Response) {
     console.log("the body " + JSON.stringify(req.body));
 
     const form = new formidable.IncomingForm();
@@ -77,16 +76,21 @@ const addProduct = async function (req: Request, res: Response) {
 
 
 
-        //@ts-ignore, It works so i dont see whats the big deal with typescript
+        //@ts-ignore // string|string[] isnt assignable to string, It works so i dont see whats the big deal with typescript
         submission = { name: (fields.name), type: (fields.type), brand: (fields.brand), price: Number(fields.price), description: (fields.description) }
-
 
         result = await store.create(submission)
 
         if (result) {
-            console.log("I RAN!!!!!")
+
+            //@ts-ignore same error as on 75
+            const brandresult = addbrand_type(fields.brand, fields.type)
+
+            console.log(brandresult)
+
             const blazeUrls = await blazeApi(blazeKeyId!, blazeKey!);
             console.log("blaze stuff in controller: " + JSON.stringify(blazeUrls))
+
             //@ts-ignore, gives error: filepath doesnt exist on img
             uploadImg(files.img.filepath, files.img.size, blazeUrls, result.id)
         }
@@ -104,16 +108,37 @@ const addProduct = async function (req: Request, res: Response) {
 }
 
 const getProduct = async function (req: Request, res: Response) {
+
+    if(isNaN(Number(req.params.id))){
+        res.send("Invalid id.")
+        return;
+    }
+
     const product = await store.read(req.params.id);
  
     if (product.id) {
-        res.render("product_info.pug", { name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price })
+        res.render("product_info.pug", {name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price })
+    }
+    else{
+        res.send("Error: 404. Not found")
     }
 }
-const productsRoutes = (app: express.Application) => {
-    app.post("/product/add", addProduct);
-    app.get("/product/:id", getProduct);
 
+const getCatalog = async function (req: Request, res: Response) {
+    res.locals.layout = "dammit"
+    res.render("product_catalog.pug")
+}
+const getCatalogProducts = async function (req: Request, res: Response) {
+    const result = await store.findcatalogProducts(req.params.type, req.params.brand);
+    res.send(result);
+}
+
+const productsRoutes = (app: express.Application) => {
+    app.get("/addProduct", verifyAuthToken(adminTokenSecret as string),addProductGet);
+    app.post("/addProduct", verifyAuthToken(adminTokenSecret as string), addProductPost);
+    app.get("/product/:id", getProduct);
+    app.get("/products/:type-:brand", getCatalogProducts)
+    app.get("/", getCatalog)
 }
 
 export default productsRoutes;

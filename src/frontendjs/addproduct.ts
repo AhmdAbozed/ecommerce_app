@@ -2,6 +2,24 @@ const imginput = <HTMLInputElement>document.getElementById("imgInput");
 
 const imgarea = document.getElementById("pic")
 
+function hideoptions(){
+  
+  //hide all brand selector options until a type is selected
+
+  const options = document.querySelectorAll(".brandOption");
+  const brandSelect = document.getElementById("inputBrand")  
+  
+  //@ts-ignore
+  brandSelect.selectedIndex = 0;
+
+  for (const option of options) {
+    option.setAttribute("hidden", "true");
+  }
+
+}
+
+hideoptions();
+
 imginput?.addEventListener("change", async (event) => {
   const imgfile = imginput.files;
   console.log(imgfile)
@@ -56,3 +74,24 @@ async function sendImg() {
   const result = await resp.json();
   console.log("backblaze api: " + result)
 }
+
+document.getElementById("inputType")?.addEventListener("change", (event)=>{
+  //@ts-ignore //Simple error, fixing it would add a fair amount of code that is unnecessary
+  console.log("inputtype event"+JSON.stringify(event.target?.value))
+  
+  hideoptions()
+
+  //@ts-ignore
+  if(event.target?.value == "*"){
+    const selectedOptions = document.querySelectorAll(".brandOption")
+    for (const option of selectedOptions) {
+      option.removeAttribute("hidden")
+    }
+  }
+
+  //@ts-ignore
+  const selectedOptions = document.querySelectorAll("."+event.target?.value)
+  for (const option of selectedOptions) {
+    option.removeAttribute("hidden")
+  }
+})

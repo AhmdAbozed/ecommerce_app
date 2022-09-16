@@ -18,7 +18,7 @@ document.forms["formBody"].addEventListener("submit", async (event) => {
   } 
   
   else {
-    window.location.href = ("http://" + window.location.hostname + ":" + window.location.port + "/user")
+    window.location.href = ("http://" + window.location.hostname + ":" + window.location.port + "/")
   }
 
 });

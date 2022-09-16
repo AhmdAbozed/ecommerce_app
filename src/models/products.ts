@@ -44,6 +44,7 @@ export class productsStore {
 
     async read(id: string): Promise<product> {
         try {
+            
             const conn = await client.connect();
             const sql = 'SELECT * FROM products WHERE id=($1)';
             const results = await conn.query(sql, [id]);
@@ -57,14 +58,27 @@ export class productsStore {
         }
     }
 
-    async find(product: product): Promise<product> {
+    async findcatalogProducts(type: string, brand: string): Promise<product[]> {
         try {
+
+            //I can't get type = type to return all rows in a functional way, so I have to use this sketchy method
+            let typeCheck;
+            let brandCheck;
+            if(type == "type") typeCheck = 'type = "type" AND $1 = $1';
+            else typeCheck = "type = ($1)";
+
+            if(brand == "brand") brandCheck = 'brand = "brand" AND $2 = $2';
+            else brandCheck = "brand = ($2)";
+            
             const conn = await client.connect();
-            const sql = 'SELECT * FROM products WHERE name = ($1) AND type = ($2) AND brand = ($3) AND description = ($4) AND name = ($5)';
-            const results = await conn.query(sql, [product.name, product.type, product.brand, product.description, product.price]);
+            console.log(type + "T AND B" + brand)
+            const sql = `SELECT * FROM products WHERE ${typeCheck} AND ${brandCheck}`;
+            console.log(sql)
+            const results = await conn.query(sql, [type, brand]);
+            console.log("findcatalogProducts models: "+JSON.stringify(results.rows));
             conn.release();
             //@ts-ignore
-            return results.rows[0];
+            return results.rows;
         }
         catch (err) {
             throw new Error(`${err}`)

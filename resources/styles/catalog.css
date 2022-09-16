@@ -103,3 +103,8 @@ Credits to artstation page for the method
         height: 20vw;
     }
 }
+
+.productImg{
+    max-width: 100%;
+    height: 100%;
+}

@@ -1,4 +1,5 @@
-extends homeLayout
+
+extends /Layout
 
 block content
     link(rel="stylesheet", href="http://localhost:3000/resources/styles/catalog.css")
@@ -7,25 +8,20 @@ block content
             div(id = "filterSection")
 
                 select(name="" class = "filters" id="type")
-                    option(value="ayee") All Products  
+                    option(value="brandOption") layoute All Products  
  
                 select(name="" class = "filters" id="brand")
-                    option(value="all brands") All brands
+                    option(value="brandOption") All brands
 
 
                 select(name="" class = "filters" id="price")
-                    option(value="ayee") Any price 
+                    option(value="*") Any price 
 
-                input(type="button" class = "filters" value="FIND")
+                input(type="button" class = "filters" value="FIND" id="find")
 
             div(id = "catalog")
                 div(class = "products")
-                div(class = "products")
-                div(class = "products")
-                div(class = "products")
-                div(class = "products")
-                div(class = "products")
-                div(class = "products")
-                div(class = "products")
 
-            
+    script(src="http://localhost:3000/resources/js/catalog.js")
+    script. 
+        console.log("here" + layout)

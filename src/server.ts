@@ -2,7 +2,7 @@ import express from "express"
 import { Request, Response } from "express";
 import path from "path";
 import bodyParser from "body-parser";
-import catalog from "./catalog.js";
+import catalog from "./routes.js";
 import cookies from 'cookie-parser';
 
 
@@ -19,6 +19,8 @@ app.use(express.json());
 
 app.use(cookies())
 
+catalog(app)
+
 app.set('view engine', 'pug')
 
 app.use("/resources/", express.static(path.join(__dirname, 'resources')));
@@ -28,7 +30,7 @@ app.get("/product/add",(req: Request, res: Response)=>{res.render("management.pu
 
 app.get("/product",(req: Request, res: Response)=>{res.render("product_info.pug")})
 
-catalog(app)
+
 
 export {app}
 
