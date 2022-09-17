@@ -7,7 +7,7 @@ block content
     div(id="signInBody")
         div(class="signInContent" id="signInContent")
             div(id = "gpuImgSection")
-                img(src="http://localhost:3000/resources/icons/gpu3.png" id = "gpuImg")
+                img(src= host+ "resources/icons/gpu3.png" id = "gpuImg")
                 span(id = "gpuText") ABOZED HARDWARE
         
             form(action="" method="post"  id = "formBody")
@@ -23,5 +23,5 @@ block content
                 p(class = "error" id="signinError")
 
                 input(type="submit", id="submit")
-                a(href = "http://localhost:3000/user/signup" id="registerLink") Sign Up?
-    script(src="http://localhost:3000/resources/js/signin.js") 
+                a(href =  host+ "/user/signup" id="registerLink") Sign Up?
+    script(src= host+ "/resources/js/signin.js") 

@@ -1,6 +1,6 @@
 html(lang=en)
   head
-    link(rel="stylesheet", href="http://localhost:3000/resources/styles/layout.css") 
+    link(rel="stylesheet", href= host + "/resources/styles/layout.css") 
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
   body
@@ -8,7 +8,7 @@ html(lang=en)
       li(class = "headBlocks" id = "searchBlock") 
         input(type="text" id="searchBar") 
         div(type="button", id="searchButton")
-          img(src="http://localhost:3000/resources/icons/search.png" id = "searchIcon")
+          img(src= host + "/resources/icons/search.png" id = "searchIcon")
             
       li(class = "headBlocks" id = "products" ) Products
 
@@ -18,4 +18,4 @@ html(lang=en)
       block content
       
     div(class = "footer")
-  script(src="http://localhost:3000/resources/js/app.js") 
+  script(src= host + "/resources/js/app.js") 
