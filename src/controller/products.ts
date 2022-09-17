@@ -133,7 +133,7 @@ const getProduct = async function (req: Request, res: Response) {
 }
 
 const getCatalog = async function (req: Request, res: Response) {
-
+    console.log("PROTOCOL: "+req.protocol)
     const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
     res.render("product_catalog.pug", {host: host})
 

@@ -10,14 +10,17 @@ import path from "path"
 
 dotenv.config()
 
-const { tokenSecret, adminTokenSecret, adminUsername, adminPassword} = process.env
+const { tokenSecret, adminTokenSecret, adminUsername, adminPassword, HOST_PORT_URL} = process.env
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const store = new usersStore();
 
 const userHome = function (req: Request, res: Response) {
-    res.render("homeLayout.pug")
+    
+    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    res.render("homeLayout.pug", {host: host})
+
 }
 
 const signUpGet = function (req: Request, res: Response) {
@@ -25,7 +28,9 @@ const signUpGet = function (req: Request, res: Response) {
     const __dirname = path.resolve()
     res.locals.basedir =  path.join(__dirname, 'views/guest');
     
-    res.render("signUp.pug")
+    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    res.render("signUp.pug", {host: host})
+
 }
 
 const signUpPost = [
@@ -70,7 +75,8 @@ const signInGet = function (req: Request, res: Response) {
     const __dirname = path.resolve()
     res.locals.basedir =  path.join(__dirname, 'views/guest');
     
-    res.render("signIn.pug")
+    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    res.render("signIn.pug", {host: host})
 
 }
 
@@ -118,7 +124,9 @@ const signOut = function(req: Request, res: Response){
         console.log("signing out")
     
     }
-    res.render("signIn.pug")
+    
+    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;  
+    res.render("signIn.pug", {host: host})
 }
 
 const usersRoutes = (app: express.Application) => {
