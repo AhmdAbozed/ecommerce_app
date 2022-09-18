@@ -17,9 +17,9 @@ app.listen(port,()=>{
 app.use(express.json());
 
 app.use(cookies())
-
+app.enable('trust proxy'); // Iam not sure whether it goes after or before routing
 catalog(app)
-
+app.enable('trust proxy');
 app.set('view engine', 'pug')
 
 app.get("/status", (req: Request, res: Response)=>{res.status(200).send("<p>Status Code")})
