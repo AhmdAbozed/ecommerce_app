@@ -1,13 +1,13 @@
 {
     "placeholder":{
       "driver": "pg",
-      "host": "localhost",
+      "host": "156.220.215.201",
       "user": "postgres",
       "password": "passageword"
     },
     "dev": {
       "driver": "pg",
-      "host": "localhost",
+      "host": "156.220.215.201",
       "database": "hardware_db",
       "user": "postgres",
       "password": "passageword",
