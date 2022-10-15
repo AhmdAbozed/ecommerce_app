@@ -33,6 +33,7 @@ const signUpGet = function (req: Request, res: Response) {
 
 }
 
+//See express-validator docs for, docs.
 const signUpPost = [
 
     body('username').isLength({ min: 4, max: 30 }).withMessage("Username must be atleast 4 characters")
@@ -63,7 +64,7 @@ const signUpPost = [
         }
         const result = await store.signup(submission)
 
-        createToken(res, result, tokenSecret as string)
+        createToken(res, result)
         
         res.send(errorArr)
 
@@ -97,7 +98,7 @@ const signInPost = async function (req: Request, res: Response) {
     const result = await store.signin(submission)
 
     if(result[0]){
-        createToken(res, result[0], tokenSecret as string)
+        createToken(res, result[0])
     }
     res.send(result)
 

@@ -4,6 +4,12 @@ import express from "express"
 
 const store = new brands_typesStore()
 
+
+/*
+when a new product is added, its brand and type are passed to following function.
+if its brand-type combo already exists, increase quantity by one
+else, add new brand-type entry with quantity 1
+*/
 const addbrand_type = async function (brand:string, type:string) {
     
     const brands_types = await store.index()

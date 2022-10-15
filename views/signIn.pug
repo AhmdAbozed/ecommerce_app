@@ -7,7 +7,7 @@ block content
     div(id="signInBody")
         div(class="signInContent" id="signInContent")
             div(id = "gpuImgSection")
-                img(src= host+ "resources/icons/gpu3.png" id = "gpuImg")
+                img(src= host+ "/resources/icons/gpu3.png" id = "gpuImg")
                 span(id = "gpuText") ABOZED HARDWARE
         
             form(action="" method="post"  id = "formBody")
@@ -16,10 +16,11 @@ block content
                 
                 label(for="usernameText") Username 
                 input(type="text" id = "usernameText" name = "username")
+                p(class = "error" id="usernameError") 
                
                 label(for="passwordText") Password
                 input(type="Text" id = "passwordText" name = "password")
-                
+                p(class = "error" id="usernameError") 
                 p(class = "error" id="signinError")
 
                 input(type="submit", id="submit")

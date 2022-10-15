@@ -1,9 +1,14 @@
+/*
+This file is not documented using comments yet.
+formidable is used to parse imgs from backblaze.
+*/
+
 import express from "express"
-import e, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { productsStore, product } from '../models/products.js';
 import {addbrand_type} from '../controller/brands_types.js';
 import dotenv from 'dotenv'
-import { verifyAuthToken, redirectToHome } from "../util/tokenauth.js"
+import { verifyAuthToken } from "../util/tokenauth.js"
 import blazeApi from "../util/backblaze.js"
 import fs from "fs"
 import formidable from "formidable"
@@ -11,7 +16,7 @@ import https, { get } from "https"
 
 dotenv.config()
 
-const { adminTokenSecret, tokenSecret, blazeKeyId, blazeKey, HOST_NAME, HOST_PORT_URL } = process.env
+const { adminTokenSecret, blazeKeyId, blazeKey, HOST_PORT_URL } = process.env
 
 const store = new productsStore();
 
@@ -72,10 +77,6 @@ const addProductPost = async function (req: Request, res: Response) {
     let result;
     
     form.parse(req, async (err, fields, files) => {
-
-        console.log("INSIDE FORM PARSE")
-        console.log("FIELDS " + JSON.stringify(fields));
-        console.log("FILES " + JSON.stringify(files));
 
         //@ts-ignore // string|string[] isnt assignable to string, It works so i dont see whats the big deal with typescript
         submission = { name: (fields.name), type: (fields.type), brand: (fields.brand), price: Number(fields.price), description: (fields.description) }

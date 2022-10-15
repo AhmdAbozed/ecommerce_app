@@ -1,3 +1,5 @@
+//There is a DB for testing and one for production, ENV variable determines which should pg use
+
 import dotenv from 'dotenv'
 
 import pg from "pg";

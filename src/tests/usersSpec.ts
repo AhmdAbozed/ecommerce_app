@@ -1,3 +1,8 @@
+/*
+
+only signing in and signing up have tests.
+*/
+
 import { user, usersStore } from "../models/users.js"
 import supertest from "supertest";
 import { app } from "../server.js";

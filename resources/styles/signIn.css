@@ -1,3 +1,8 @@
+
+*{
+    font-family: sans-serif;
+}
+
 #signInBody{
    margin-top: 5em;
    
@@ -58,11 +63,16 @@
 }
 
 #formbody input{
+    
     border-radius: 8px;
     max-width: 15em;
     width: 100%;
     background-color: rgb(159, 157, 167);
     }
+
+#formbody #submit{
+    cursor: pointer;
+}
 
 #formbody label{
 

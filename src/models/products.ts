@@ -29,7 +29,7 @@ export class productsStore {
 
     async create(product: product): Promise<product> {
         try {
-            console.log("Recieved req.body: "+JSON.stringify(product))
+
             const conn = await client.connect();
             const sql = 'INSERT INTO products (name, type, brand, description, price) VALUES ($1, $2, $3, $4, $5) RETURNING *';
             const results = await conn.query(sql, [product.name, product.type, product.brand, product.description, product.price]);
@@ -48,7 +48,6 @@ export class productsStore {
             const conn = await client.connect();
             const sql = 'SELECT * FROM products WHERE id=($1)';
             const results = await conn.query(sql, [id]);
-            console.log("product read Gottem: "+results)
             conn.release();
             //@ts-ignore
             return results.rows[0];
@@ -61,7 +60,11 @@ export class productsStore {
     async findcatalogProducts(type: string, brand: string): Promise<product[]> {
         try {
 
-            //I can't get type = type to return all rows in a functional way, so I have to use this sketchy method
+            /*
+            I wanted to return products of any type when type = "type" and of any brand when brand="brand"
+            but type="type" only returns all when it is single quote, while parameters ($1) only work with double quotes
+            so single quote or double quote are used according to input  
+            */
             let typeCheck;
             let brandCheck;
             if(type == "type") typeCheck = 'type = "type" AND $1 = $1';
@@ -71,11 +74,8 @@ export class productsStore {
             else brandCheck = "brand = ($2)";
             
             const conn = await client.connect();
-            console.log(type + "T AND B" + brand)
             const sql = `SELECT * FROM products WHERE ${typeCheck} AND ${brandCheck}`;
-            console.log(sql)
             const results = await conn.query(sql, [type, brand]);
-            console.log("findcatalogProducts models: "+JSON.stringify(results.rows));
             conn.release();
             //@ts-ignore
             return results.rows;

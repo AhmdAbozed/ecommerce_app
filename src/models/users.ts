@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const { pepper, saltRounds, bcryptPass, tokenSecret } = process.env;
+const { pepper, saltRounds} = process.env;
 
 export type user = {
     id?: number,
@@ -35,6 +35,8 @@ export class usersStore {
             throw new Error(`${err}`)
         }
     }
+
+    //See if email or username already exist
     async validateSignUp(user: user): Promise<Array<errorMsg>> {
         try {
 
@@ -55,6 +57,7 @@ export class usersStore {
         catch(err){throw new Error(`${err}`)}
     }
 
+    
     async signup(user: user): Promise<user> {
         try {
 
@@ -95,7 +98,9 @@ export class usersStore {
                     return results.rows;
                 }
             }
-            results.rows.pop();
+
+            //invalid username or pass. return empty array.
+            results.rows.pop(); 
             return results.rows;
             
 
