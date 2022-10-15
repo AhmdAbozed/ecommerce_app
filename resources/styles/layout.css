@@ -1,6 +1,10 @@
 /*
     Yeah it is 80 lines of css for 4 blocks in a header, but what does it matter? it is easy to debug css.
 */
+*{
+    font-family: sans-serif;
+}
+
 html { height: 100%; }
 
 body{
@@ -100,4 +104,10 @@ margin-top: 2px;
 #signIn{
     max-width: 30em;
 }
+
+#signOut{
+    margin-left: auto;
+    margin-right: 1.9rem;
+}
+
 

@@ -11,8 +11,8 @@ document.forms["formBody"].addEventListener("submit", async (event) => {
   });
     
   const result = await resp.json();
-  console.log(result)
-  console.log("result is above, result[0] -->: " + result[0])
+  
+  //if the user is found, it returns user object again, otherwise response is empty
   if(result[0]){
     window.location.href = ("http://"+window.location.hostname+":"+window.location.port+"/")
   }

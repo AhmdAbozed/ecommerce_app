@@ -1,20 +1,30 @@
+
+/*
+To upload or download from BB:
+    1. get unique BB api url, using BB account key and keyID
+    2. send request to the unique BB api url to get upload/download URL
+    3. send request to the upload/download URL, with the approperiate headers.
+
+The upload/download requests are done at products.ts file
+*/
+
 import https from 'https'
 
 const geturl = function(options:any){
+    
     return new Promise((resolve,reject)=>{
+        
         let urls:any;
+        
         const getBlaze = https.request(options,(res)=>{
-            
-            console.log("about to get blaze urls")
+           
             res.on('data', (chunk)=>{
-                
-               urls = JSON.parse(chunk);
-               
+               urls = JSON.parse(chunk);   
             })
-            res.on('end', () => {resolve(urls);});
-       
-            
+
+            res.on('end', () => {resolve(urls);}); 
         })
+       
         getBlaze.on('error', (err) => {
             reject(err);
           });

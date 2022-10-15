@@ -2,9 +2,6 @@
 document.forms["formBody"].addEventListener("submit", async (event) => {
   
   event.preventDefault(); //default behaviour replaces the page with the response file, which is not ideal.
-  //@ts-ignore
-  const forum = new URLSearchParams(new FormData(event.target))
-  console.log(forum)
   const resp = await fetch(event.target.action, {
     method: "POST",
     //@ts-ignore
@@ -13,6 +10,7 @@ document.forms["formBody"].addEventListener("submit", async (event) => {
   
   const errors = await resp.json();
 
+  //Are there any input errors? if not, move to homepage, assuming cookie was provided.
   if (errors[0]) {
     listErrors(errors)
   } 
@@ -23,6 +21,7 @@ document.forms["formBody"].addEventListener("submit", async (event) => {
 
 });
 
+//displays all input errors for the user
 function listErrors(errors: Array<any>) {
   
   const errorElements = document.querySelectorAll(".error")

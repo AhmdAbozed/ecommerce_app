@@ -14,7 +14,6 @@ export class brands_typesStore {
     
     async create(brand_type: brand_type): Promise<brand_type> {
         try {
-            console.log("Recieved req.body: "+JSON.stringify(brand_type))
             const conn = await client.connect();
             const sql = 'INSERT INTO brands_types (brand, type, quantity) VALUES ($1, $2, $3) RETURNING *';
             const results = await conn.query(sql, [brand_type.brand, brand_type.type, brand_type.quantity]);
@@ -27,6 +26,7 @@ export class brands_typesStore {
         }
     }
 
+    //increase number of products of a certain brand/type by one, runs when a new product is added.
     async addone(id: number): Promise<brand_type> {
         try {
             const conn = await client.connect();
