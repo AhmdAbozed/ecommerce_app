@@ -47,7 +47,7 @@
 
 - Product creation page, limited to the admin's account using admin token
 
-####Note: Other endpoints exist that don't interact with the user
+#### Note: Other endpoints exist that don't interact with the user
 
 ## Implemented Features
 
