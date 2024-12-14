@@ -40,7 +40,8 @@ document.forms["productDetails"].addEventListener("submit", async (event) => {
   console.log(logging)
   if (imginput.files![0]) {
     console.log((imginput.files![0]));
-    submission.append('file', imginput.files![0])
+    submission.append('file', imginput.files![0]);
+    submission.append('filename', imginput.files![0].name);
   }
   event.preventDefault(); //default behaviour replaces the page with the response file, which is not ideal.
   const options = {
@@ -49,34 +50,22 @@ document.forms["productDetails"].addEventListener("submit", async (event) => {
     body: submission
 
   }
-  const resp = await fetch("http://" + window.location.hostname + ":" + window.location.port + "/product/add", options);
-
-  const result = await resp.json();
-  console.log(result)
-  console.log("result is above, result[0] -->: " + result[0])
+  const resp = await fetch("http://" + window.location.hostname + ":" + window.location.port + "/addProduct", options);
+console.log("sending")
+  console.log(resp)
+  if(resp.status == 200){
+    document.getElementById('submitResult')!.innerHTML = 'Product Added';
+  }else{
+    document.getElementById('submitResult')!.innerHTML = '';
+    
+  }
+  
 }
 );
 //*/
 
-
-async function sendImg() {
-
-  //not functional yet
-
-  const resp = await fetch("https://api.backblazeb2.com/b2api/v2/b2_authorize_account", {
-    method: "GET",
-
-    headers: {
-      'Authorization': 'Basic ZWJiMGVjZjhmNmE4OjAwNDhhZTE3YzgyYTQyOWM5NjhlMjI4MDk3OTZhNTNkNWJiZGI0ZjUwMQ==',
-
-    }
-  })
-  const result = await resp.json();
-  console.log("backblaze api: " + result)
-}
-
 document.getElementById("inputType")?.addEventListener("change", (event)=>{
-  //@ts-ignore //Simple error, fixing it would add a fair amount of code that is unnecessary
+  //@ts-ignore
   console.log("inputtype event"+JSON.stringify(event.target?.value))
   
   hideoptions()

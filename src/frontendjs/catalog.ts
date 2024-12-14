@@ -8,7 +8,7 @@ type product = {
   brand: string;
   description: string;
   price: Number;
-
+  filename: string
 }
 
 //first I grab all brands/types from DB, then add filters accordingly
@@ -24,8 +24,6 @@ async function getFilters() {
 /*
 I wanted to display the available brands for each type, 
 ex: only nividia and amd gpus are available, so if gpu filter is picked, brand selector only displays nvidia and amd.
-
-
 */
 function addfilters(filters: Array<any>) {
 
@@ -88,6 +86,7 @@ async function getproducts(type: string, brand: string) {
   const resp = await fetch("http://" + window.location.hostname + ":" + window.location.port + "/products/" + type + "-" + brand, {method: "get"});
 
   const result = await resp.json();
+  console.log(result)
   return result
   }
 
@@ -99,7 +98,6 @@ function listProducts(products:Array<any>){
   catalog = document.createElement("div")
   catalog.setAttribute("id", "catalog")
   document.getElementById("bodyContent")?.append(catalog)
-
 
   for (const product of products) {
     const element = createProductElement(product)
@@ -113,11 +111,11 @@ function createProductElement(product:product){
   div.setAttribute("id", JSON.stringify(product.id));
   
   const img = document.createElement("img")
-  img.setAttribute("src", "https://f004.backblazeb2.com/file/abozedbucket/"+product.id+".png")
+  img.setAttribute("src",  location + "resources/images/"+product.filename)
   img.setAttribute("class", "productImg")
 
   const anchor = document.createElement("a")
-  anchor.setAttribute("href", "http://localhost:3000/product/"+product.id)
+  anchor.setAttribute("href", location+"product/"+product.id)
   
   anchor.append(img)
   div.append(anchor)

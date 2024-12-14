@@ -17,13 +17,13 @@ block content
                 p(class = "error" id="usernameError") 
                 
                 label(for="passwordText") Password
-                input(type="Text" id = "passwordText" name = "password")
+                input(type="password" id = "passwordText" name = "password")
                 p(class = "error" id="passwordError") 
                 
                 label(for="email") Email
                 input(type="Text" id = "email" name = "email")
                 p(class = "error" id="emailError") 
 
-                input(type="submit", id="submit")
+                input(type="submit", id="submit" value="Sign up")
                 a(href =  host+ "/user/signin" id="registerLink") Already have an account?
     script(src= host+ "/resources/js/signup.js") 

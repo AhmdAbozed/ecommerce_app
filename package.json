@@ -10,6 +10,7 @@
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.0.1",
     "esm": "^3.2.25",
     "express": "^4.18.1",
@@ -17,7 +18,6 @@
     "formidable": "^2.0.1",
     "jasmine": "^4.3.0",
     "jsonwebtoken": "^8.5.1",
-  
     "pg": "^8.8.0",
     "pug": "^3.0.2",
     "supertest": "^6.2.4",
@@ -27,7 +27,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node ./dist/server.js",
-    "testDB": "db-migrate --env placeholder db:create hardware_test_db",
+    "testDB": "db-migrate --env placeholder db:create estore",
     "migrateUp": "cross-env ENV=dev db-migrate --env dev up",
     "migrateDown": "cross-env ENV=dev db-migrate --env dev down",
     "test": "tsc && cross-env ENV=test jasmine",

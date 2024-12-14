@@ -1,14 +1,14 @@
 {
     "placeholder":{
       "driver": "pg",
-      "host": "156.220.215.201",
+      "host": "localhost",
       "user": "postgres",
       "password": "passageword"
     },
     "dev": {
       "driver": "pg",
-      "host": "156.220.215.201",
-      "database": "hardware_db",
+      "host": "localhost",
+      "database": "estore",
       "user": "postgres",
       "password": "passageword",
       "port":"5432"

@@ -13,10 +13,11 @@ import blazeApi from "../util/backblaze.js"
 import fs from "fs"
 import formidable from "formidable"
 import https, { get } from "https"
+import path from "path";
 
 dotenv.config()
 
-const { adminTokenSecret, blazeKeyId, blazeKey, HOST_PORT_URL } = process.env
+const { adminTokenSecret, blazeKeyId, blazeKey, HOST_PORT } = process.env
 
 const store = new productsStore();
 
@@ -59,10 +60,14 @@ const uploadImg = async function (filepath: string, size: number, url_token: any
         blazeUploading.end()
     })
 }
-
+const saveImg = async function (filepath: string, fileId:string){
+    console.log('filepath is', filepath);
+    //@ts-ignore
+    await fs.readFileSync('/home', fs.readFileSync(filepath))
+}
 const addProductGet = async function (req: Request, res: Response) {
 
-    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;
     res.render("management.pug", {host: host})
 
 }
@@ -70,32 +75,34 @@ const addProductGet = async function (req: Request, res: Response) {
 const addProductPost = async function (req: Request, res: Response) {
     
     console.log("the body " + JSON.stringify(req.body));
-
-    const form = new formidable.IncomingForm();
+    //@ts-ignore
+    const form = new formidable.IncomingForm({ uploadDir: path.resolve()+'/resources/images/', filename: (name, ext, part, form) => {
+        return part.originalFilename; // Will be joined with options.uploadDir.
+    }});
 
     let submission: product;
     let result;
     
     form.parse(req, async (err, fields, files) => {
-
-        //@ts-ignore // string|string[] isnt assignable to string, It works so i dont see whats the big deal with typescript
-        submission = { name: (fields.name), type: (fields.type), brand: (fields.brand), price: Number(fields.price), description: (fields.description) }
+        console.log(fields.filename, 'uploaded file name')
+        //@ts-ignore // string|string[] isnt assignable to string
+        submission = { name: fields.name, type: fields.type, brand: fields.brand, filename: fields.filename, price: Number(fields.price), description: fields.description }
 
         result = await store.create(submission)
 
         if (result) {
-
+            
             //@ts-ignore same error as on 75
-            const brandresult = addbrand_type(fields.brand, fields.type)
+            const brandresult = await addbrand_type(fields.brand, fields.type)
 
             console.log(brandresult)
-
+            //@ts-ignore gives error: filepath doesnt exist on img
+            /*
             const blazeUrls = await blazeApi(blazeKeyId!, blazeKey!);
             console.log("blaze stuff in controller: " + JSON.stringify(blazeUrls))
-
             //@ts-ignore, gives error: filepath doesnt exist on img
             uploadImg(files.img.filepath, files.img.size, blazeUrls, result.id)
-
+            */
         }
 
         if (err) {
@@ -121,9 +128,9 @@ const getProduct = async function (req: Request, res: Response) {
     
 
     if (product.id) {
-
-        const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
-        res.render("product_info.pug", {host: host,name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price })
+        console.log('getting product')
+        const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;
+        res.render("product_info.pug", {host: host,name: product.name, type: product.type, brand: product.brand, description: product.description, price: product.price, file_name: product.filename })
 
     }
 
@@ -135,7 +142,7 @@ const getProduct = async function (req: Request, res: Response) {
 
 const getCatalog = async function (req: Request, res: Response) {
     console.log("PROTOCOL: "+req.protocol)
-    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;
     res.render("product_catalog.pug", {host: host})
 
 }

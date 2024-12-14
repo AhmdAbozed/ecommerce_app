@@ -25,15 +25,15 @@ block content
                     label(for="" class = "label") BRAND:
                         select(name="brand" class = "input" id = "inputBrand")
                             <option hidden disabled selected value> -- select an option -- </option>
-                            option(class = "brandOption gpu" value="nvidia") NVIDIA
-                            option(class = "brandOption gpu cpu" value="amd") AMD
-                            option(class = "brandOption gpu keyboard mouse" value="intel") INTEL
-                            option(class = "brandOption gpu" value="asus") ASUS 
+                            option(class = "brandOption gpu cpu keyboard mouse laptop" value="nvidia") NVIDIA
+                            option(class = "brandOption gpu cpu keyboard mouse laptop" value="amd") AMD
+                            option(class = "brandOption gpu cpu keyboard mouse laptop" value="intel") INTEL
+                            option(class = "brandOption gpu cpu keyboard mouse laptop" value="asus") ASUS 
                     label(for="" class = "label") PRICE:
                         input(type="text" name = "price" placeholder = "PRODUCT PRICE" class = "input" id = "inputPrice")
                 
                 textarea(cols="1" rows="1" name = "description" placeholder = "PRODUCT INFO" class = "inputParagraph" id = "inputInfo")
-                
+                div(id="submitResult")
                 button(type="submit" class = "btn" id = "submission") Add product
                 button(type="button" class = "btn" id = "imgbtn")
                     label(for="imgInput" id = "imgLabel" ) upload img  

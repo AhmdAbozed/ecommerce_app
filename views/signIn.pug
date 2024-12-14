@@ -8,7 +8,7 @@ block content
         div(class="signInContent" id="signInContent")
             div(id = "gpuImgSection")
                 img(src= host+ "/resources/icons/gpu3.png" id = "gpuImg")
-                span(id = "gpuText") ABOZED HARDWARE
+                span(id = "gpuText") HARDWARE STORE
         
             form(action="" method="post"  id = "formBody")
                 
@@ -19,10 +19,10 @@ block content
                 p(class = "error" id="usernameError") 
                
                 label(for="passwordText") Password
-                input(type="Text" id = "passwordText" name = "password")
+                input(type="password" id = "passwordText" name = "password")
                 p(class = "error" id="usernameError") 
                 p(class = "error" id="signinError")
 
-                input(type="submit", id="submit")
+                input(type="submit", id="submit" value="Signin")
                 a(href =  host+ "/user/signup" id="registerLink") Sign Up?
     script(src= host+ "/resources/js/signin.js") 

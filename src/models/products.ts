@@ -9,6 +9,7 @@ export type product = {
     brand: string;
     description: string;
     price: Number;
+    filename: string
 
 }
 
@@ -31,8 +32,8 @@ export class productsStore {
         try {
 
             const conn = await client.connect();
-            const sql = 'INSERT INTO products (name, type, brand, description, price) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-            const results = await conn.query(sql, [product.name, product.type, product.brand, product.description, product.price]);
+            const sql = 'INSERT INTO products (name, type, brand, description, price, filename) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+            const results = await conn.query(sql, [product.name, product.type, product.brand, product.description, product.price, product.filename]);
             conn.release();
             //@ts-ignore
             return results.rows[0];

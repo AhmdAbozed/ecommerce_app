@@ -10,7 +10,7 @@ import path from "path"
 
 dotenv.config()
 
-const { tokenSecret, adminTokenSecret, adminUsername, adminPassword, HOST_PORT_URL} = process.env
+const { tokenSecret, adminUsername, adminPassword, HOST_PORT} = process.env
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -18,7 +18,7 @@ const store = new usersStore();
 
 const userHome = function (req: Request, res: Response) {
     
-    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;
     res.render("homeLayout.pug", {host: host})
 
 }
@@ -28,7 +28,7 @@ const signUpGet = function (req: Request, res: Response) {
     const __dirname = path.resolve()
     res.locals.basedir =  path.join(__dirname, 'views/guest');
     
-    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;
     res.render("signUp.pug", {host: host})
 
 }
@@ -57,7 +57,7 @@ const signUpPost = [
         const submission: user = {username: req.body.username, password: req.body.password, email: req.body.email  }
         
         const validation = await store.validateSignUp(submission)
-        console.log("recieved validation whatever: "+validation)
+        console.log("recieved validation: "+validation)
         if (validation[0]){
             res.send(validation);
             return;
@@ -76,14 +76,17 @@ const signInGet = function (req: Request, res: Response) {
     const __dirname = path.resolve()
     res.locals.basedir =  path.join(__dirname, 'views/guest');
     
-    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;
+    const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;
     res.render("signIn.pug", {host: host})
 
 }
 
 const signInPost = async function (req: Request, res: Response) {
-    
+    console.log(adminUsername, adminPassword, req.body.username == adminUsername && req.body.password == adminPassword);
+
     if(req.body.username == adminUsername && req.body.password == adminPassword){
+        console.log("admin logging in");
+
         createToken(res, "Adminstrator", "admin") 
         console.log("Back to users from token creation");
 
@@ -107,7 +110,7 @@ const signInPost = async function (req: Request, res: Response) {
 const signOut = function(req: Request, res: Response){
     if(req.cookies.admin){
         console.log("first cookie deletion")
-        res.cookie('admin', "yee yee", {
+        res.cookie('admin', "placeholder", {
             
             expires: new Date(2000), // time until expiration
             secure: false, // set to true if you're using https
@@ -117,7 +120,7 @@ const signOut = function(req: Request, res: Response){
     }
     if(req.cookies.user){
         console.log("second cookie deletion")
-        res.cookie('user', "yee yee", {
+        res.cookie('user', "placeholder", {
             expires: new Date(2000), // time until expiration
             secure: false, // set to true if you're using https
             httpOnly: true,
@@ -126,7 +129,7 @@ const signOut = function(req: Request, res: Response){
     
     }
     
-    const host = req.protocol + "://" +req.hostname+HOST_PORT_URL;  
+    const host = req.protocol + "://" +req.hostname+":"+HOST_PORT;  
     res.render("signIn.pug", {host: host})
 }
 
